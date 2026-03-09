@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mood Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Daily Mood Tracker</h1>
+    </header>
+
+    <div class="container">
+
+        <form id="moodForm">
+
+            <label>Select Your Mood</label>
+
+            <select id="mood">
+                <option value="Happy">😊 Happy</option>
+                <option value="Calm">😌 Calm</option>
+                <option value="Neutral">😐 Neutral</option>
+                <option value="Sad">😔 Sad</option>
+                <option value="Stressed">😣 Stressed</option>
+            </select>
+
+            <label>Energy Level</label>
+
+            <select id="energy">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+
+            <label>Notes</label>
+            <textarea id="notes"></textarea>
+
+            <button type="submit">Save Mood</button>
+
+        </form>
+
+        <h3>Your Mood History</h3>
+
+        <ul id="moodList"></ul>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

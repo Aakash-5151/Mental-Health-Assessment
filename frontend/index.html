@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Mental Health Assessment</title>
@@ -8,53 +9,60 @@
 
 <body>
 
-<header>
-    <h1>AI Mental Health Support Platform</h1>
-    <p>Check your stress level</p>
-</header>
+    <header>
+        <h1>AI Mental Health Support Platform</h1>
+        <p>Check your stress level</p>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="mood.html">Mood Tracker</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
 
-<div class="container">
+    <div class="container">
 
-<h2>Stress Assessment Questionnaire</h2>
+        <h2>Stress Assessment Questionnaire</h2>
 
-<form id="stressForm">
+        <form id="stressForm">
 
-<label>1. How often do you feel overwhelmed?</label>
-<select name="q1">
-<option value="1">Never</option>
-<option value="2">Rarely</option>
-<option value="3">Sometimes</option>
-<option value="4">Often</option>
-<option value="5">Always</option>
-</select>
+            <label>1. How often do you feel overwhelmed?</label>
+            <select name="q1">
+                <option value="1">Never</option>
+                <option value="2">Rarely</option>
+                <option value="3">Sometimes</option>
+                <option value="4">Often</option>
+                <option value="5">Always</option>
+            </select>
 
-<label>2. Do you have trouble sleeping?</label>
-<select name="q2">
-<option value="1">Never</option>
-<option value="2">Rarely</option>
-<option value="3">Sometimes</option>
-<option value="4">Often</option>
-<option value="5">Always</option>
-</select>
+            <label>2. Do you have trouble sleeping?</label>
+            <select name="q2">
+                <option value="1">Never</option>
+                <option value="2">Rarely</option>
+                <option value="3">Sometimes</option>
+                <option value="4">Often</option>
+                <option value="5">Always</option>
+            </select>
 
-<label>3. Do you feel anxious during the day?</label>
-<select name="q3">
-<option value="1">Never</option>
-<option value="2">Rarely</option>
-<option value="3">Sometimes</option>
-<option value="4">Often</option>
-<option value="5">Always</option>
-</select>
+            <label>3. Do you feel anxious during the day?</label>
+            <select name="q3">
+                <option value="1">Never</option>
+                <option value="2">Rarely</option>
+                <option value="3">Sometimes</option>
+                <option value="4">Often</option>
+                <option value="5">Always</option>
+            </select>
 
-<button type="submit">Check Stress Level</button>
+            <button type="submit">Check Stress Level</button>
 
-</form>
+        </form>
 
-<div id="result"></div>
+        <div id="result"></div>
 
-</div>
+    </div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
