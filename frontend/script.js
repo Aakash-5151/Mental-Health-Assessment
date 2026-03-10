@@ -150,15 +150,25 @@ if (loginForm) {
         })
             .then(res => res.json())
             .then(data => {
+                if (data.success) {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("user", JSON.stringify(data.user));
+                    // Check if profile is complete
+                    const profileComplete = localStorage.getItem("profileComplete");
+                    if (!profileComplete) {
+                        window.location.href = "profile.html";
+                    } else {
+                        window.location.href = "dashboard.html";
+                    }
+                }
 
                 const resultEl = document.getElementById("loginResult");
                 if (resultEl) {
                     resultEl.innerText = data.message;
+                    resultEl.classList.remove('error-msg', 'success-msg');
+                    resultEl.classList.add(data.success ? 'success-msg' : 'error-msg');
+                    // Add some color fallback if classes aren't in CSS yet
                     resultEl.style.color = data.success ? '#3d9b7a' : '#e74c3c';
-                }
-
-                if (data.success) {
-                    window.location.href = "index.html"
                 }
 
                 // Reset button
@@ -213,9 +223,17 @@ if (registerForm) {
         })
             .then(res => res.json())
             .then(data => {
+                const resultDiv = document.getElementById("registerResult");
+                resultDiv.innerText = data.message;
 
-                document.getElementById("registerResult").innerText = data.message
-
+                if (data.success || data.message.includes("successful")) {
+                    resultDiv.style.color = "#3d9b7a";
+                    setTimeout(() => {
+                        window.location.href = "login.html";
+                    }, 1500);
+                } else {
+                    resultDiv.style.color = "#e74c3c";
+                }
             })
 
     })

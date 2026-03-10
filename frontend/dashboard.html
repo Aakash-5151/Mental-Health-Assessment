@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="requires-auth">
+    <nav class="navbar" id="navbar">
+        <div class="nav-logo">
+            <svg class="logo-icon" viewBox="0 0 32 32" width="32" height="32">
+                <circle cx="16" cy="16" r="14" fill="url(#logoGrad)" opacity="0.15" />
+                <path
+                    d="M16 6C10.48 6 6 10.48 6 16s4.48 10 10 10 10-4.48 10-10S21.52 6 16 6zm-1 14.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zm4-5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"
+                    fill="url(#logoGrad)" />
+                <defs>
+                    <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+                        <stop offset="0%" stop-color="#56ab91" />
+                        <stop offset="100%" stop-color="#5b9bd5" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span>MindCare AI</span>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="mood.html">Mood Tracker</a>
+            <a href="stress.html">Stress Test</a>
+            <a href="chatbot.html">Chatbot</a>
+            <a href="profile.html">Profile</a>
+        </div>
+        <div class="nav-actions">
+            <button class="btn-nav-login" onclick="logout()"
+                style="border:none; cursor:pointer; background:transparent;">Logout</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-main">
+        <div class="dashboard-hero">
+            <h1>Welcome back, <span class="username"></span>!</h1>
+            <p>Here is an overview of your wellness journey today.</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dashboard-card" id="cardMood">
+                <div class="dashboard-card-icon">📊</div>
+                <h3>Mood Tracker</h3>
+                <p>Log your emotions to visualize patterns over time.</p>
+                <a href="mood.html" class="btn-action">Open Tracker</a>
+            </div>
+
+            <div class="dashboard-card" id="cardStress">
+                <div class="dashboard-card-icon">🧠</div>
+                <h3>Stress Assessment</h3>
+                <p>Take a quick AI-powered assessment to check your stress level.</p>
+                <a href="stress.html" class="btn-action">Start Test</a>
+            </div>
+
+            <div class="dashboard-card" id="cardChat">
+                <div class="dashboard-card-icon">💬</div>
+                <h3>AI Companion</h3>
+                <p>Have a supportive, judgment-free conversation anytime.</p>
+                <a href="chatbot.html" class="btn-action">Chat Now</a>
+            </div>
+        </div>
+
+        <h2 class="dashboard-section-title">Mood Trends</h2>
+        <div class="dashboard-full-card">
+            <canvas id="moodChart" height="80"></canvas>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

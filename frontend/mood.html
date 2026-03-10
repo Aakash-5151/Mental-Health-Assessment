@@ -6,10 +6,24 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="requires-auth">
+
+    <nav class="navbar">
+        <h2>MindCare AI</h2>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="mood.html" class="active">Mood Tracker</a>
+            <a href="stress.html">Stress Test</a>
+            <a href="chatbot.html">Chatbot</a>
+            <a href="profile.html">Profile</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
 
     <header>
         <h1>Daily Mood Tracker</h1>
+        <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; margin-top: 5px;">Track your daily emotions and
+            energy levels</p>
     </header>
 
     <div class="container">
@@ -18,7 +32,8 @@
 
             <label>Select Your Mood</label>
 
-            <select id="mood">
+            <select id="mood" required>
+                <option value="">-- Choose a mood --</option>
                 <option value="Happy">😊 Happy</option>
                 <option value="Calm">😌 Calm</option>
                 <option value="Neutral">😐 Neutral</option>
@@ -28,22 +43,31 @@
 
             <label>Energy Level</label>
 
-            <select id="energy">
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
+            <select id="energy" required>
+                <option value="">-- Choose energy level --</option>
+                <option value="High">⚡ High</option>
+                <option value="Medium">→ Medium</option>
+                <option value="Low">▼ Low</option>
             </select>
 
-            <label>Notes</label>
-            <textarea id="notes"></textarea>
+            <label>Notes (Optional)</label>
+            <textarea id="notes" placeholder="Add any notes about how you're feeling..."></textarea>
 
             <button type="submit">Save Mood</button>
 
         </form>
 
-        <h3>Your Mood History</h3>
+        <h3 style="margin-top: 30px; color: #3d9b7a;">Your Mood History</h3>
 
         <ul id="moodList"></ul>
+
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8e5;">
+            <a href="stress.html"
+                style="display: inline-block; background: linear-gradient(135deg, #56ab91, #5b9bd5); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; text-align: center; margin-right: 10px;">Take
+                Stress Assessment →</a>
+            <a href="index.html" style="display: inline-block; color: #56ab91; text-decoration: none;">← Back to
+                Home</a>
+        </div>
 
     </div>
 

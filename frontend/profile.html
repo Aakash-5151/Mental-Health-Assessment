@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="requires-auth">
+    <nav class="navbar">
+        <h2>MindCare AI</h2>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="mood.html">Mood Tracker</a>
+            <a href="stress.html">Stress Test</a>
+            <a href="chatbot.html">Chatbot</a>
+            <a href="profile.html" class="active">Profile</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
+    <header>
+        <h1>Your Profile</h1>
+    </header>
+    <div class="container" style="text-align: center; padding-top: 40px;">
+        <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 32px; box-shadow: var(--shadow-md); max-width: 400px; margin: 0 auto 40px;">
+            <div style="width: 120px; height: 120px; border-radius: 50%; background: var(--accent-gradient); color: white; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; font-weight: bold; margin: 0 auto 24px; box-shadow: var(--shadow-glow);">
+                <span id="profileInitial">U</span>
+            </div>
+            <h2 id="profileName" style="margin-bottom: 8px; color: var(--text-primary); font-size: 1.5rem;">User Name</h2>
+            <p id="profileEmail" style="color: var(--text-secondary); margin-bottom: 0; font-size: 0.95rem;">user@example.com</p>
+        </div>
+
+        <!-- Profile Questions Section -->
+        <div id="profileQuestions" style="display: none; margin-top: 40px;">
+            <div class="login-form" style="max-width: 500px; margin: 0 auto;">
+                <h3 style="text-align: center; margin-bottom: 24px; color: var(--gray-700);">Complete Your Profile</h3>
+                <form id="profileForm">
+                    <div class="input-group">
+                        <label>What is your age?</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="age" min="1" max="120" required placeholder="Enter your age">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>What best describes your current situation?</label>
+                        <div class="input-wrapper">
+                            <select id="situation" required style="width: 100%; padding: 12px 14px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.7); font-family: var(--font); font-size: 0.92rem; color: var(--text-primary); transition: var(--transition); outline: none;">
+                                <option value="">Select...</option>
+                                <option value="student">Student</option>
+                                <option value="employed">Employed</option>
+                                <option value="unemployed">Unemployed</option>
+                                <option value="retired">Retired</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>How many hours do you usually spend working or studying each day?</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="workHours" min="0" max="24" required placeholder="e.g., 8">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>On average, how many hours do you sleep each night?</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="sleepHours" min="0" max="24" required placeholder="e.g., 7">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-login" style="margin-top: 20px;">Save Profile</button>
+                    <button type="button" id="skipBtn" style="margin-top: 12px; width: 100%; padding: 11px 16px; border: 1.5px solid var(--gray-300); border-radius: var(--radius-sm); background: rgba(255, 255, 255, 0.6); font-family: var(--font); font-size: 0.85rem; font-weight: 500; color: var(--gray-600); cursor: pointer; transition: var(--transition);" onmouseover="this.style.borderColor='var(--gray-400)'; this.style.background='#fff'; this.style.boxShadow='var(--shadow-sm)';" onmouseout="this.style.borderColor='var(--gray-300)'; this.style.background='rgba(255, 255, 255, 0.6)'; this.style.boxShadow='none';">Skip for Now</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Profile Answers Section -->
+        <div id="profileAnswers" style="display: none; margin-top: 40px;">
+            <div style="max-width: 500px; margin: 0 auto;">
+                <h3 style="text-align: center; margin-bottom: 24px; color: var(--gray-700);">Your Profile Information</h3>
+                <div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow-sm);">
+                    <div style="display: grid; gap: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--gray-200);">
+                            <span style="font-weight: 600; color: var(--gray-600);">Age:</span>
+                            <span id="displayAge" style="color: var(--text-primary);"></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--gray-200);">
+                            <span style="font-weight: 600; color: var(--gray-600);">Current Situation:</span>
+                            <span id="displaySituation" style="color: var(--text-primary); text-transform: capitalize;"></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--gray-200);">
+                            <span style="font-weight: 600; color: var(--gray-600);">Work/Study Hours per Day:</span>
+                            <span id="displayWorkHours" style="color: var(--text-primary);"></span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                            <span style="font-weight: 600; color: var(--gray-600);">Sleep Hours per Night:</span>
+                            <span id="displaySleepHours" style="color: var(--text-primary);"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="dashboard.html" class="btn-login" style="display: inline-flex; text-decoration: none; padding: 13px 32px;">Back to Dashboard</a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userStr = localStorage.getItem("user");
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                document.getElementById("profileName").innerText = user.name || "User";
+                document.getElementById("profileEmail").innerText = user.email || "";
+                if (user.name) {
+                    document.getElementById("profileInitial").innerText = user.name.charAt(0).toUpperCase();
+                }
+            }
+
+            // Check if profile is complete
+            const profileComplete = localStorage.getItem("profileComplete");
+            if (profileComplete) {
+                const profileData = JSON.parse(localStorage.getItem("profileData") || "{}");
+                document.getElementById("displayAge").innerText = profileData.age || "Not provided";
+                document.getElementById("displaySituation").innerText = profileData.situation || "Not provided";
+                document.getElementById("displayWorkHours").innerText = profileData.workHours || "Not provided";
+                document.getElementById("displaySleepHours").innerText = profileData.sleepHours || "Not provided";
+                document.getElementById("profileAnswers").style.display = "block";
+            } else {
+                document.getElementById("profileQuestions").style.display = "block";
+            }
+
+            // Handle profile form submission
+            const profileForm = document.getElementById("profileForm");
+            if (profileForm) {
+                profileForm.addEventListener("submit", function(e) {
+                    e.preventDefault();
+                    const age = document.getElementById("age").value;
+                    const situation = document.getElementById("situation").value;
+                    const workHours = document.getElementById("workHours").value;
+                    const sleepHours = document.getElementById("sleepHours").value;
+
+                    const profileData = { age, situation, workHours, sleepHours };
+                    localStorage.setItem("profileData", JSON.stringify(profileData));
+                    localStorage.setItem("profileComplete", "true");
+
+                    // Display the answers
+                    document.getElementById("displayAge").innerText = age;
+                    document.getElementById("displaySituation").innerText = situation;
+                    document.getElementById("displayWorkHours").innerText = workHours;
+                    document.getElementById("displaySleepHours").innerText = sleepHours;
+                    document.getElementById("profileAnswers").style.display = "block";
+                    document.getElementById("profileQuestions").style.display = "none";
+                    alert("Profile updated successfully!");
+                });
+            }
+
+            // Handle skip button
+            const skipBtn = document.getElementById("skipBtn");
+            if (skipBtn) {
+                skipBtn.addEventListener("click", function() {
+                    localStorage.setItem("profileComplete", "true");
+                    document.getElementById("profileQuestions").style.display = "none";
+                    document.getElementById("profileAnswers").style.display = "block";
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

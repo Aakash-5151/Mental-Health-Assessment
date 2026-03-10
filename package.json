@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Aakash-5151/Mental-Health-Assessment#readme",
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "node-fetch": "^3.3.2"
   }
 }

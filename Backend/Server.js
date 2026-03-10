@@ -1,3 +1,4 @@
+require('dotenv').config();
 const bcrypt = require("bcrypt")
 const express = require("express")
 const cors = require("cors")
@@ -206,14 +207,13 @@ app.post("/login", async (req, res) => {
         })
 
     } catch (error) {
-
+        console.error("Login route error:", error);
         res.json({
             success: false,
-            message: "Server error"
+            message: "Server error: " + error.message
         })
 
     }
-
 })
 // ============================
 // SAVE MOOD ENTRY
@@ -342,22 +342,28 @@ app.get("/stress-history", async (req, res) => {
 // SERVER START
 // ============================
 
-const PORT = 3000
+if (!process.env.HF_TOKEN) {
+  console.error("HF_TOKEN environment variable not set. Please set it to your Hugging Face API token.");
+  process.exit(1);
+}
+
+const PORT = 3000;
 
 app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+});
 
-    console.log("Server running on http://localhost:" + PORT)
+const detectEmotion = require("./emotionService");
 
-})
+app.post("/chat", async (req, res) => {
 
-app.get("/moods", authenticateToken, async (req, res) => {
+  const userMessage = req.body.message;
 
-    const moods = await Mood.find()
+  const emotion = await detectEmotion(userMessage);
 
-    res.json({
-        success: true,
-        data: moods
-    })
+  res.json({
+    message: userMessage,
+    emotion: emotion
+  });
 
-})
-
+});

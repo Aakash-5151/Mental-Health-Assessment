@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Stress Level Assessment</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="requires-auth">
+
+    <nav class="navbar">
+        <h2>MindCare AI</h2>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="mood.html">Mood Tracker</a>
+            <a href="stress.html" class="active">Stress Test</a>
+            <a href="chatbot.html">Chatbot</a>
+            <a href="profile.html">Profile</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <header>
+        <h1>🧠 Stress Level Assessment</h1>
+        <p style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; margin-top: 5px;">Answer a few quick questions to
+            understand your stress level</p>
+    </header>
+
+    <div class="container">
+
+        <p style="text-align: center; color: #6b7f74; margin-bottom: 20px; font-size: 0.95rem;">
+            This assessment helps you understand your current stress level and receive personalized recommendations.
+        </p>
+
+        <form id="stressForm">
+
+            <label>1. How stressed do you feel right now?</label>
+            <select name="q1" required>
+                <option value="">-- Select...--</option>
+                <option value="1">1 - Not stressed at all</option>
+                <option value="2">2 - Slightly stressed</option>
+                <option value="3">3 - Moderately stressed</option>
+                <option value="4">4 - Very stressed</option>
+                <option value="5">5 - Extremely stressed</option>
+            </select>
+
+            <label>2. How much control do you feel over your situation?</label>
+            <select name="q2" required>
+                <option value="">-- Select --</option>
+                <option value="5">1 - Complete control</option>
+                <option value="4">2 - Good control</option>
+                <option value="3">3 - Moderate control</option>
+                <option value="2">4 - Limited control</option>
+                <option value="1">5 - No control</option>
+            </select>
+
+            <label>3. How well are you coping with stress?</label>
+            <select name="q3" required>
+                <option value="">-- Select --</option>
+                <option value="5">1 - Coping very well</option>
+                <option value="4">2 - Coping well</option>
+                <option value="3">3 - Moderate coping</option>
+                <option value="2">4 - Struggling to cope</option>
+                <option value="1">5 - Not coping at all</option>
+            </select>
+
+            <button type="submit">Calculate Stress Level</button>
+
+        </form>
+
+        <div id="result"></div>
+
+        <div id="recommendations" style="margin-top: 20px; display: none;">
+            <h3 style="color: #3d9b7a; margin-top: 15px;">📋 Recommendations:</h3>
+            <ul id="recommendationsList" style="list-style-position: inside; color: #6b7f74;">
+                <!-- Recommendations will be inserted here -->
+            </ul>
+        </div>
+
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8e5;">
+            <a href="mood.html" style="display: inline-block; color: #56ab91; text-decoration: none;">← Back to Mood
+                Tracker</a>
+            <a href="index.html"
+                style="display: inline-block; color: #56ab91; text-decoration: none; margin-left: 20px;">← Back to
+                Home</a>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

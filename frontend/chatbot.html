@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MindCare AI Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .chat-container {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 160px);
+        }
+
+        .chat-header {
+            text-align: center;
+            margin-bottom: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chat-header h2 {
+            color: var(--text-primary);
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .chat-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+
+        .chat-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .chat-stats div {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-main {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .chat-box {
+            flex: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: var(--shadow-md);
+            max-height: 500px;
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .user-message .message-avatar {
+            background: var(--accent-gradient);
+            color: white;
+            order: 2;
+        }
+
+        .bot-message .message-avatar {
+            background: var(--green-100);
+            color: var(--green-700);
+            border: 2px solid var(--green-200);
+        }
+
+        .message-content {
+            max-width: calc(100% - 60px);
+            padding: 14px 18px;
+            border-radius: var(--radius-lg);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            word-wrap: break-word;
+            position: relative;
+        }
+
+        .user-message {
+            justify-content: flex-end;
+        }
+
+        .user-message .message-content {
+            background: var(--accent-gradient);
+            color: white;
+            text-align: right;
+            border-bottom-right-radius: 4px;
+        }
+
+        .user-message .message-content::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: -8px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-bottom: 8px solid var(--blue-500);
+        }
+
+        .bot-message {
+            justify-content: flex-start;
+        }
+
+        .bot-message .message-content {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-primary);
+            border: 1px solid var(--gray-200);
+            border-bottom-left-radius: 4px;
+        }
+
+        .bot-message .message-content::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: -8px;
+            width: 0;
+            height: 0;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid white;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .user-message .message-time {
+            text-align: right;
+        }
+
+        .bot-message .message-time {
+            text-align: left;
+        }
+
+        .typing-indicator .message-content {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green-400);
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .chat-input-area {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-md);
+            margin-top: 20px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.9);
+            font-family: var(--font);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            transition: var(--transition);
+            outline: none;
+            resize: none;
+            min-height: 20px;
+            max-height: 120px;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--green-400);
+            box-shadow: 0 0 0 3px rgba(86, 171, 145, 0.1);
+            background: #fff;
+        }
+
+        .chat-input input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .chat-input button {
+            padding: 14px 24px;
+            border: none;
+            border-radius: var(--radius-md);
+            background: var(--accent-gradient);
+            color: white;
+            font-family: var(--font);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(86, 171, 145, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-input button:hover {
+            box-shadow: 0 6px 20px rgba(86, 171, 145, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .chat-input button:active {
+            transform: translateY(0);
+        }
+
+        .chat-input button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Emotion Analysis Panel */
+        .emotion-panel {
+            width: 300px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            box-shadow: var(--shadow-md);
+            height: fit-content;
+        }
+
+        .emotion-panel h4 {
+            margin: 0 0 16px 0;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .emotion-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .emotion-item:hover {
+            background: rgba(86, 171, 145, 0.05);
+        }
+
+        .emotion-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .emotion-details {
+            flex: 1;
+        }
+
+        .emotion-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            text-transform: capitalize;
+        }
+
+        .emotion-score {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .emotion-progress {
+            width: 100%;
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+
+        .emotion-progress-fill {
+            height: 100%;
+            background: var(--accent-gradient);
+            border-radius: 3px;
+            transition: width 0.8s ease;
+        }
+
+        .no-emotion {
+            text-align: center;
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 20px;
+        }
+
+        /* Quick replies */
+        .quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .quick-reply {
+            padding: 8px 12px;
+            background: rgba(86, 171, 145, 0.1);
+            border: 1px solid var(--green-200);
+            border-radius: var(--radius-sm);
+            color: var(--green-700);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quick-reply:hover {
+            background: var(--green-200);
+            border-color: var(--green-300);
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 80px 10px 40px;
+                height: calc(100vh - 140px);
+            }
+
+            .chat-main {
+                flex-direction: column;
+            }
+
+            .emotion-panel {
+                width: 100%;
+                order: -1;
+                margin-bottom: 20px;
+            }
+
+            .message-content {
+                max-width: calc(100% - 50px);
+            }
+
+            .chat-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .chat-stats {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body class="requires-auth">
+    <nav class="navbar">
+        <div class="nav-logo">
+            <svg class="logo-icon" viewBox="0 0 32 32" width="32" height="32">
+                <circle cx="16" cy="16" r="14" fill="url(#logoGrad)" opacity="0.15" />
+                <path
+                    d="M16 6C10.48 6 6 10.48 6 16s4.48 10 10 10 10-4.48 10-10S21.52 6 16 6zm-1 14.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zm4-5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"
+                    fill="url(#logoGrad)" />
+                <defs>
+                    <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+                        <stop offset="0%" stop-color="#56ab91" />
+                        <stop offset="100%" stop-color="#5b9bd5" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span>MindCare AI</span>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="mood.html">Mood Tracker</a>
+            <a href="stress.html">Stress Test</a>
+            <a href="chatbot.html" class="active">Chatbot</a>
+            <a href="profile.html">Profile</a>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>MindCare AI Assistant</h2>
+            <p>Your compassionate AI companion for emotional support and understanding</p>
+            <div class="chat-stats">
+                <div>
+                    <span>🤖</span>
+                    <span>AI-Powered</span>
+                </div>
+                <div>
+                    <span>🛡️</span>
+                    <span>Private & Secure</span>
+                </div>
+                <div>
+                    <span>💝</span>
+                    <span>24/7 Support</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-main">
+            <div class="chat-box" id="chatBox">
+                <!-- Messages will appear here -->
+            </div>
+
+            <!-- Emotion Analysis Panel -->
+            <div class="emotion-panel">
+                <h4>Emotion Analysis</h4>
+                <div id="emotionDisplay" class="no-emotion">
+                    Share your thoughts to see emotion analysis
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <div class="chat-input">
+                <textarea id="userMessage" placeholder="Share what's on your mind... How are you feeling today?" rows="1"></textarea>
+                <button id="sendBtn" disabled>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                    </svg>
+                    Send
+                </button>
+            </div>
+
+            <!-- Quick Reply Suggestions -->
+            <div class="quick-replies" id="quickReplies">
+                <div class="quick-reply" data-message="I'm feeling anxious today">I'm feeling anxious</div>
+                <div class="quick-reply" data-message="I had a stressful day at work">Stressful day at work</div>
+                <div class="quick-reply" data-message="I'm feeling happy and grateful">Feeling happy</div>
+                <div class="quick-reply" data-message="I need someone to talk to">Need to talk</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="chatbot.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
